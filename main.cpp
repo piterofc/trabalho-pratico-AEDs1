@@ -1,7 +1,13 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include "quartoLib.h"
 using namespace std;
+
+void funcCadastrarQuarto() {
+    Quarto quarto;
+    quarto.adicionarQuarto();
+};
 
 int main()
 {
@@ -30,7 +36,7 @@ int main()
             // Cadastro de funcionário
             break;
         case 3:
-            // Cadastro de quarto
+            funcCadastrarQuarto();
             break;
         case 4:
             // Cadastro de estadia
