@@ -1,94 +1,157 @@
-#include "quartoLib.h"
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+
+#include "utilsLib.h"
+#include "quartoLib.h"
+
 using namespace std;
 
-// Getters
-int Quarto::getNumero() {
-    return numero;
-};
-int Quarto::getQuantidadeHospedes() {
-    return quantidade_hospedes;
-};
-float Quarto::getCustoDiaria() {
-    return custo_diaria;
-};
-int Quarto::getStatus() {
-    return status;
+
+// Menu
+
+void menuQuartos() {
+    //setlocale(LC_ALL, "Portuguese");
+
+    int opcao;
+    do {
+        printf("\nQuartos - Hotel Descanso Garantido\n\n");
+        printf("1 - Cadastrar quarto\n");
+        printf("2 - Listar quartos\n");
+        printf("0 - Voltar\n");
+        printf("\nDigite a opcao desejada: ");
+        scanf("%i", &opcao);
+
+        Quarto quarto;
+
+        switch (opcao) {
+            case 1:
+                limparTerminal();
+                quarto.criar();
+                break;
+            case 2:
+                limparTerminal();
+                listarQuartos();
+                break;
+            case 0:
+                limparTerminal();
+                break;
+            default:
+                limparTerminal();
+                printf("Opcao invalida!\n");
+                break;
+        }
+    } while (opcao != 0);
 };
 
-// Função para criar o quarto
-void Quarto::adicionarQuarto() {
+
+// Quuartos class
+
+void Quarto::criar() {
+    setlocale(LC_ALL, "Portuguese");
+
     printf("Insira o numero do quarto: ");
     scanf("%i", &numero);
     printf("Insira a quantidade de hospedes: ");
-    scanf("%i", &quantidade_hospedes);
+    scanf("%i", &capacidade);
     printf("Insira o custo da diaria: ");
     scanf("%f", &custo_diaria);
 
-    ofstream outFile;
-    outFile.open("quartos.dat", ios::binary | ios::app);
+    fstream quartosFile("quartos.dat", ios::in | ios::out | ios::app);
 
     // Verifica se o quarto já existe
     if (verificarQuarto(numero)) {
         printf("Esse quarto ja existe!\n\n");
     } else {
-        outFile.write((char*)this, sizeof(Quarto));
+        quartosFile.write((char*)this, sizeof(Quarto));
         printf("Quarto adicionado com sucesso!\n\n");
     }
 
-    outFile.close();
+    quartosFile.close();
 };
 
-// Função para imprimir o quarto
-void Quarto::imprimeQuarto() {
-    printf("Numero do quarto: %i\n", numero);
-    printf("Quantidade de hospedes: %i\n", quantidade_hospedes);
-    printf("Custo da diaria: %.2f\n", custo_diaria);
+void Quarto::imprimir() {
+    setlocale(LC_ALL, "Portuguese");
+
+    printf("Numero: %i\n", numero);
+    printf("Quantidade de hospedes: %i\n", capacidade);
+    printf("Custo da diaria: R$%.2f\n", custo_diaria);
+};
+
+int Quarto::getNumero() {
+    return numero;
+};
+int Quarto::getCapacidade() {
+    return capacidade;
+};
+float Quarto::getCustoDiaria() {
+    return custo_diaria;
 };
 
 
-// Função para verificar se um quarto já existe
+// Quarto functions
+
 int verificarQuarto(int num) {
+    setlocale(LC_ALL, "Portuguese");
+
     Quarto quarto;
-    ifstream inFile;
+    fstream quartosFile("quartos.dat", ios::in);
 
-    inFile.open("quartos.dat", ios::binary);
-
-    if (!inFile) {
+    if (!quartosFile) {
         printf("Não foi possível abrir o arquivo!\n\n");
         return 0;
     }
 
-    while (inFile.read((char*)&quarto, sizeof(quarto))) {
+    while (quartosFile.read((char*)&quarto, sizeof(quarto))) {
         if (quarto.getNumero() == num) {
-            inFile.close();
+            quartosFile.close();
             return 1;
         }
     }
 
-    inFile.close();
+    quartosFile.close();
     return 0;
 };
 
-// Função para listar todos os quartos
-void listarQuartos() {
+float getQuartoCusto(int num) {
+    setlocale(LC_ALL, "Portuguese");
+
     Quarto quarto;
-    ifstream inFile;
+    fstream quartosFile("quartos.dat", ios::in);
 
-    inFile.open("quartos.dat", ios::binary);
+    if (!quartosFile) {
+        printf("Não foi possível abrir o arquivo!\n\n");
+        return 0;
+    }
 
-    if (!inFile) {
+    while (quartosFile.read((char*)&quarto, sizeof(quarto))) {
+        if (quarto.getNumero() == num) {
+            quartosFile.close();
+            return quarto.getCustoDiaria();
+        }
+    }
+
+    quartosFile.close();
+    return 0;
+};
+
+void listarQuartos() {
+    setlocale(LC_ALL, "Portuguese");
+
+    Quarto quarto;
+    fstream quartoFile("quartos.dat", ios::in);
+
+    if (!quartoFile) {
         printf("Não foi possível abrir o arquivo!\n\n");
     } else {
         printf("Quartos cadastrados:\n\n");
-        while (inFile.read((char*)&quarto, sizeof(quarto))) {
-            quarto.imprimeQuarto();
+        while (quartoFile.read((char*)&quarto, sizeof(quarto))) {
+            quarto.imprimir();
             printf("\n");
         }
     }
 
-    inFile.close();
+    quartoFile.close();
 };
