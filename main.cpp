@@ -66,7 +66,7 @@ int main() {
     initFiles();
 
     printf("Trabalho interdisciplinar AEDs e Fundamentos da Engenharia de Software");
-    printf("Feito por:\n- Gabriel Rodrigues Maciel de Abreu\n- Leonardo de Souza Galvão\n- Pedro Henrique Novais Baranda");
+    printf("Feito por:\n- Gabriel Rodrigues Maciel de Abreu\n- Leonardo de Souza Galvao\n- Pedro Henrique Novais Baranda\n");
 
     // Menu
     int opcao;
