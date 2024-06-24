@@ -1,66 +1,115 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
+
+#include "utilsLib.h"
+#include "pessoasLib.h"
 #include "quartoLib.h"
+#include "estadiaLib.h"
+
 using namespace std;
+
+/*
+void funcCadastrarCliente() {
+    Cliente cliente;
+    cliente.criar();
+    cliente.imprimir();
+};
+
+void funcCadastrarFuncionario() {
+    Funcionario funcionario;
+    funcionario.criar();
+    funcionario.imprimir();
+};
 
 void funcCadastrarQuarto() {
     Quarto quarto;
-    quarto.adicionarQuarto();
+    quarto.criar();
+    quarto.imprimir();
 };
 
-int main()
-{
-    int opcao;
+void funcCadastrarEstadia() {
+    Estadia estadia;
+    estadia.criar();
+    estadia.imprimir();
+};
+
+void funcDarBaixaEstadia() {
+    int id;
+    printf("Digite o numero do quarto ou o codigo da estadia: ");
+    scanf("%i", &id);
+    darBaixaEstadia(id);
+};
+
+void funcListarEstadias() {
+    listarEstadias();
+};
+
+void funcCalcularPontosFidelidade() {
+    int codigo;
+    printf("Digite o codigo do cliente: ");
+    scanf("%i", &codigo);
+    calcularPontosFidelidade(codigo);
+};
+
+void funcListarQuartos() {
+    listarQuartos();
+};
+*/
+
+
+int main() {
+    setlocale(LC_ALL, "Portuguese");
+
+    // Inicializa os arquivos
+    initFiles();
+
+    printf("Trabalho interdisciplinar AEDs e Fundamentos da Engenharia de Software");
+    printf("Feito por:\n- Gabriel Rodrigues Maciel de Abreu\n- Leonardo de Souza Galvão\n- Pedro Henrique Novais Baranda");
 
     // Menu
+    int opcao;
     do {
-        printf("\n");
-        printf("1 - Cadastrar cliente\n");
-        printf("2 - Cadastrar funcionario\n");
-        printf("3 - Cadastrar quarto\n");
-        printf("4 - Cadastrar estadia\n");
-        printf("5 - Dar baixa em estadia\n");
-        printf("6 - Pesquisar por cliente/funcionario\n");
-        printf("7 - Exibir estadias\n");
-        printf("8 - Mostrar pontos de fidelidade\n");
-        printf("9 - SAIR\n");
-        printf("Digite a opcao desejada: ");
+        printf("\nMenu - Hotel Descanso Garantido\n\n");
+        printf("1 - Clientes\n");
+        printf("2 - Funcionarios\n");
+        printf("3 - Quartos\n");
+        printf("4 - Estadias\n");
+        printf("0 - SAIR\n");
+        printf("\nDigite a opcao desejada: ");
         scanf("%i", &opcao);
 
         switch (opcao) {
         case 1:
-            // Cadastro de cliente
+            // Menu de clientes
+            limparTerminal();
+            menuClientes();
             break;
         case 2:
-            // Cadastro de funcionário
+            // Menu de funcionários
+            limparTerminal();
+            menuFuncionarios();
             break;
         case 3:
-            funcCadastrarQuarto();
+            // Menu de quartos
+            limparTerminal();
+            menuQuartos();
             break;
         case 4:
-            // Cadastro de estadia
+            // Menu de estadias
+            limparTerminal();
+            menuEstadias();
             break;
-        case 5:
-            // Baixa em estadia
-            break;
-        case 6:
-            // Pesquisa por cliente/funcionário
-            break;
-        case 7:
-            // Exibição de estadias
-            break;
-        case 8:
-            // Cálculo de pontos de fidelidade
-            break;
-        case 9:
-            printf("Saindo...\n");
+        case 0:
+            printf("\nSaindo...\n");
             break;
         default:
-            printf("Opcao invalida!\n");
+            limparTerminal();
+            printf("\n===============\nOpcao invalida!\n===============\n");
             break;
         }
-    } while (opcao != 9);
+    } while (opcao != 0);
 
     return 0;
 }

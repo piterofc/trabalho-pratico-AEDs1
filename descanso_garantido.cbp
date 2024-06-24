@@ -32,9 +32,18 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="estadiaLib.cpp" />
+		<Unit filename="estadiaLib.h" />
+		<Unit filename="fidelidadeLib.cpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="pesquisaPessoasLib.cpp" />
+		<Unit filename="pesquisaPessoasLib.h" />
+		<Unit filename="pessoasLib.cpp" />
+		<Unit filename="pessoasLib.h" />
 		<Unit filename="quartoLib.cpp" />
 		<Unit filename="quartoLib.h" />
+		<Unit filename="utilsLib.cpp" />
+		<Unit filename="utilsLib.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
